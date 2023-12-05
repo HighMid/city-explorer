@@ -32,12 +32,12 @@ Currently, two official plugins are available:
 
 ### 4 Dec 2023
 
-Name of feature: ________________________________
+Name of feature: Initiation of Map API
 
-Estimate of time needed to complete: _____
+Estimate of time needed to complete: 3 hours
 
-Start time: _____
+Start time: 1800
 
-Finish time: _____
+Finish time: 2250
 
-Actual time needed to complete: _____
+Actual time needed to complete: 4/30 Hours
