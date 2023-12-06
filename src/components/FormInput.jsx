@@ -3,12 +3,14 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import LocationDisplay from './LocationDisplay';
+import Weather from './Weather';
 
-export default function FormInput(props){
+export default function FormInput(){
 
     const [locationInfo, setLocationInfo] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [mapUrl, setMapUrl] = useState('');
+    const [weatherData, setWeatherData] = useState(null);
     
 
     const handleSubmit = async(event) => {
@@ -30,6 +32,7 @@ export default function FormInput(props){
                 if (locationData.lat && locationData.lon) {
                     const mapImage = `https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${locationData.lat},${locationData.lon}&zoom=10&size=400x400`;
                     setMapUrl(mapImage);
+                    handleWeatherFetch(locationData.lat, locationData.lon);
                 } else {
                     console.error("Latitude and Longitude are undefined");
                 }
@@ -38,6 +41,17 @@ export default function FormInput(props){
         catch(error){
             console.error("Error fetching data: ", error);
             alert("Error fetching data: " + error);
+        }
+    };
+
+    const handleWeatherFetch = async (lat, lon) => {
+        try {
+            const weatherResponse = await axios.get(`http://localhost:3000/weather`, {
+                params: { lat, lon }
+            });
+            setWeatherData(weatherResponse.data);
+        } catch (error) {
+            console.error("Error fetching weather data:", error);
         }
     };
     
@@ -72,6 +86,7 @@ export default function FormInput(props){
             </Form>
             {locationInfo && <LocationDisplay info={locationInfo} />}
             {mapUrl && <img src={mapUrl} alt="map" />}
+            {weatherData && <Weather forecasts={weatherData} />}
         </div>
     );
 }
