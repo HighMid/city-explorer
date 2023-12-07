@@ -14,7 +14,6 @@ const Movies = ({ movies }) => {
                     <Card.Body>
                         <Card.Title>{movie.title}</Card.Title>
                         <Card.Text>{movie.overview}</Card.Text>
-                        {/* Other movie details */}
                     </Card.Body>
                 </Card>
             ))}

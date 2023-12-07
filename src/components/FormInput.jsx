@@ -48,7 +48,7 @@ export default function FormInput(){
 
     const handleWeatherFetch = async (lat, lon) => {
         try {
-            const weatherResponse = await axios.get(`http://localhost:3000/weather`, {
+            const weatherResponse = await axios.get(`https://city-explorer-api-45hz.onrender.com/weather`, {
                 params: { lat, lon }
             });
             setWeatherData(weatherResponse.data);
@@ -59,7 +59,7 @@ export default function FormInput(){
 
     const handleMovieFetch = async (city) => {
         try {
-            const movieResponse = await axios.get(`http://localhost:3000/movies`, {
+            const movieResponse = await axios.get(`https://city-explorer-api-45hz.onrender.com/movies`, {
                 params: { city }
             });
             setMovies(movieResponse.data);
