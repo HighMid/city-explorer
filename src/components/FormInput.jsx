@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import LocationDisplay from './LocationDisplay';
 import Weather from './Weather';
+import Movies from './Movies';
 
 export default function FormInput(){
 
@@ -11,6 +12,8 @@ export default function FormInput(){
     const [searchQuery, setSearchQuery] = useState('');
     const [mapUrl, setMapUrl] = useState('');
     const [weatherData, setWeatherData] = useState(null);
+    const [movies, setMovies] = useState([]);
+
     
 
     const handleSubmit = async(event) => {
@@ -21,11 +24,9 @@ export default function FormInput(){
         
         try {
             const response = await axios.get(API);
-            console.log("API Response:", response); // Log the entire response
     
             if (response.data && response.data.length > 0) {
                 const locationData = response.data[0];
-                console.log("Location Data:", locationData); // Log the location data
     
                 setLocationInfo(locationData);
     
@@ -33,6 +34,7 @@ export default function FormInput(){
                     const mapImage = `https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${locationData.lat},${locationData.lon}&zoom=10&size=400x400`;
                     setMapUrl(mapImage);
                     handleWeatherFetch(locationData.lat, locationData.lon);
+                    handleMovieFetch(searchQuery);
                 } else {
                     console.error("Latitude and Longitude are undefined");
                 }
@@ -54,22 +56,22 @@ export default function FormInput(){
             console.error("Error fetching weather data:", error);
         }
     };
+
+    const handleMovieFetch = async (city) => {
+        try {
+            const movieResponse = await axios.get(`http://localhost:3000/movies`, {
+                params: { city }
+            });
+            setMovies(movieResponse.data);
+        } catch (error) {
+            console.error("Error fetching movie data:", error);
+        }
+    };
     
-        //     try {
-    //         const response = await axios.get(API);
-    //         setLocationInfo(response.data[0]);
-    //         console.log(response);
-    //         const mapImage = `https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${response.data.lat},${response.data.lon}&zoom=10`;
-    //         setMapUrl(mapImage);
-    //     }
-    //     catch(error){
-    //         console.error("Error fetching data: " , error);
-    //         alert("Error fetching data" , error);
-    //     }
-
-        
-    // };
-
+    // Call this function inside handleSubmit after setting the location info
+    
+    
+    
     return(
         <div>
             <Form onSubmit={handleSubmit}>
@@ -87,6 +89,7 @@ export default function FormInput(){
             {locationInfo && <LocationDisplay info={locationInfo} />}
             {mapUrl && <img src={mapUrl} alt="map" />}
             {weatherData && <Weather forecasts={weatherData} />}
+            {movies && <Movies movies={movies} />}
         </div>
     );
 }
