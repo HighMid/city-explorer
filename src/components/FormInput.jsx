@@ -13,6 +13,7 @@ export default function FormInput(){
     const [mapUrl, setMapUrl] = useState('');
     const [weatherData, setWeatherData] = useState(null);
     const [movies, setMovies] = useState([]);
+    const [searchMade, setSearchMade] = useState(false);
 
     
 
@@ -33,6 +34,7 @@ export default function FormInput(){
                 if (locationData.lat && locationData.lon) {
                     const mapImage = `https://maps.locationiq.com/v3/staticmap?key=${API_KEY}&center=${locationData.lat},${locationData.lon}&zoom=10&size=400x400`;
                     setMapUrl(mapImage);
+                    setSearchMade(true);
                     handleWeatherFetch(locationData.lat, locationData.lon);
                     handleMovieFetch(searchQuery);
                 } else {
@@ -86,10 +88,11 @@ export default function FormInput(){
                 </Form.Group>
                 <Button variant="primary" type="submit">Explore!</Button>
             </Form>
-            {locationInfo && <LocationDisplay info={locationInfo} />}
+            {locationInfo && <LocationDisplay info={locationInfo} weatherData={weatherData} />}
             {mapUrl && <img src={mapUrl} alt="map" />}
-            {weatherData && <Weather forecasts={weatherData} />}
-            {movies && <Movies movies={movies} />}
+            {/* {weatherData && <Weather forecasts={weatherData} />} */}
+            {movies && <Movies movies={movies} searchMade={searchMade} />}
+
         </div>
     );
 }

@@ -1,24 +1,42 @@
 // src/components/WeatherDisplay.jsx
 import React from 'react';
-import Card from 'react-bootstrap/Card';
+import { When } from 'react-if';
+import WeatherDay from './WeatherDay';
 
-const Weather = ({ forecasts }) => {
-    if (!forecasts) {
-        return <div>No weather data available.</div>;
-    }
+// export default function Weather({ forecasts }){
+//     if (!forecasts || forecasts.length === 0) {
+//         return <div>No weather data available.</div>;
+//     }
 
+//     return (
+//         <div>
+//             {forecasts.map((forecast, index) => (
+//                 <WeatherDay 
+//                     key={index} 
+//                     date={forecast.date} 
+//                     description={forecast.description} 
+//                 />
+//             ))}
+//         </div>
+//     );
+// }
+
+export default function Weather({ forecasts }){
     return (
         <div>
-            {forecasts.map((data, index) => (
-                <Card key={index}>
-                    <Card.Body>
-                        <Card.Title>{data.date}</Card.Title>
-                        <Card.Text>{data.description}</Card.Text>
-                    </Card.Body>
-                </Card>
-            ))}
+            <When condition={forecasts === null}>
+                {''}
+            </When>
+
+            <When condition={forecasts && forecasts.length === 0}>
+                <div>No weather data available.</div>
+            </When>
+
+            <When condition={forecasts && forecasts.length > 0}>
+                {forecasts.map((forecast, index) => (
+                    <WeatherDay key={index} date={forecast.date} description={forecast.description} />
+                ))}
+            </When>
         </div>
     );
-};
-
-export default Weather;
+}
