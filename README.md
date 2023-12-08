@@ -49,7 +49,19 @@ Start time: 1700
 
 Finish time: 2230
 
+### 7 Dec 2023
+
 Actual time needed to complete: 5/30 Hours
+
+Name of feature: Refactor components, Movies.jsx , Weather.jsx and created WeatherDay.jsx
+
+Estimate of time needed to complete: 3 hours
+
+Start time: 1623
+
+Finish time: 1854
+
+Actual time needed to complete: 2/30 hours
 
 ## Credit and Collaborations
 
